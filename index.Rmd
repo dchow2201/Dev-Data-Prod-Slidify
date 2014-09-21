@@ -1,0 +1,61 @@
+---
+title       : Developing Data Products Project 
+subtitle    : Reproducible Pitch Presentation 
+author      : David Chow
+job         : The following is a pitch presentation for the mpg predictition application. 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## User's Instruction
+
+User first need to supply some information about their car on the left panel.      
+1. They must enter the number of cylinders their cars has, the choices are 4, 6, or 8.       
+2. They need to specify the weight of their car using the slider. The weight is enter in the unit of per 1000 lbs. So if the car weight 3000 lb, then the user will enter 3.     
+      
+After the user specified their inputs, they can press the Submit button to render their mpg prediction. The prediction result is shown on the right panel. The unit of the predicted mpg is in miles per gallon.
+
+---
+
+## Prediction method
+
+The prediction model is generated using the mtcars data set provided in R    
+```{r data}
+head(mtcars,3)
+```
+
+The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).  
+
+The variables that I have decided to use to predict *MPG* are *Number of cylinders* and *Weight (lb/1000)*.   
+
+---
+
+## Exploratory Analysis
+
+The following is an exploratory graphs of the three variables:
+```{r ggplot}
+library(ggplot2)
+qplot(wt,mpg,data=mtcars,geom=c("point","smooth"),
+      method="lm", formula=y~x, facets=.~cyl,
+      xlab="Weight (lb/1000)",ylab="Miles per Gallon")
+```
+
+
+---
+
+## Linear Model
+
+The following is the summary of the linear regression model.   
+```{r lm}
+summary(lm(mpg~cyl+wt,data=mtcars))
+```
+
+83% of the variation in mpg is explained by the model.    
+While holding the number of cylinders in the car constant (4,6 or 8), for every 1000 lb increase in the car's weight, the mpg decrease by 3.2 miles per gallon.          
+
+
+
