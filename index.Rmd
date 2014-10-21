@@ -24,19 +24,23 @@ After the user specified their inputs, they can press the Submit button to rende
 ## Prediction method
 
 The prediction model is generated using the mtcars data set provided in R    
-```{r data}
-head(mtcars,3)
-```
 
 The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).  
 
-The variables that I have decided to use to predict *MPG* are *Number of cylinders* and *Weight (lb/1000)*.   
+The variables that I have decided to use to predict *MPG* are *Number of cylinders* and *Weight (lb/1000)*.        
+
+### Result:   
+86% of the variation in mpg is explained by the model.          
+* 4 cylinder car: for every 1000 lb increase in the car's weight, the mpg decrease by 5.4 miles per gallon.      
+* 6 cylinder car: for every 1000 lb increase in the car's weight, the mpg decrease by 3.8 miles per gallon.      
+* 8 cylinder car: for every 1000 lb increase in the car's weight, the mpg decrease by 2.2 miles per gallon.
 
 ---
 
 ## Exploratory Analysis
 
-The following is an exploratory graphs of the three variables:
+The following is an exploratory graphs between **MPG**,**Weight** and **Number of Cylinder**:    
+
 ```{r ggplot}
 library(ggplot2)
 qplot(wt,mpg,data=mtcars,geom=c("point","smooth"),
@@ -51,11 +55,10 @@ qplot(wt,mpg,data=mtcars,geom=c("point","smooth"),
 
 The following is the summary of the linear regression model.   
 ```{r lm}
-summary(lm(mpg~cyl+wt,data=mtcars))
+summary(lm(mpg~cyl*wt,data=mtcars))
 ```
 
-83% of the variation in mpg is explained by the model.    
-While holding the number of cylinders in the car constant (4,6 or 8), for every 1000 lb increase in the car's weight, the mpg decrease by 3.2 miles per gallon.          
+    
 
 
 
